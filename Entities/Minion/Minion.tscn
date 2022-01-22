@@ -18,12 +18,13 @@ scale = Vector2( 0.5, 0.9 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.0890007, -0.0929985 )
 shape = SubResource( 96 )
 
 [node name="JumpTween" type="Tween" parent="."]
 
-[node name="Name" type="RichTextLabel" parent="."]
+[node name="Debug" type="Node2D" parent="."]
+
+[node name="Name" type="RichTextLabel" parent="Debug"]
 margin_left = -71.0
 margin_top = -66.0
 margin_right = 74.0
@@ -33,7 +34,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Target" type="RichTextLabel" parent="."]
+[node name="Target" type="RichTextLabel" parent="Debug"]
 margin_left = -72.0
 margin_top = -51.0
 margin_right = 75.0
@@ -42,3 +43,8 @@ text = "Target: "
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="JitterCheck" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="JitterCheck" to="." method="_on_JitterCheck_timeout"]

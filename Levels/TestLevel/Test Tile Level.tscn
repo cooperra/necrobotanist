@@ -611,31 +611,31 @@ current = true
 
 [node name="Minion" parent="." instance=ExtResource( 3 )]
 position = Vector2( 25, -91 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Minion2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 372, -315 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Minion3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 578, -175 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Minion4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 499, -93 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Minion5" parent="." instance=ExtResource( 3 )]
 position = Vector2( 136, -9 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Minion6" parent="." instance=ExtResource( 3 )]
 position = Vector2( 92, -220 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Minion7" parent="." instance=ExtResource( 3 )]
 position = Vector2( 279, -153 )
-STOP_DISTANCE = 150.0
+STOP_DISTANCE = 200.0
 
 [node name="Waypoint" type="Area2D" parent="." groups=["waypoint"]]
 script = ExtResource( 5 )

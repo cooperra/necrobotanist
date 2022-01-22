@@ -42,6 +42,9 @@ export var FALL_ACCEL = 900
 var input := Vector2(0, 0)
 export var STOP_DISTANCE := 3.0
 var target_to_follow: Node2D
+var jitter_stop := false
+var jitter_stop_target_pos := Vector2.ZERO
+var debug_status_text := "Chase"
 
 
 func _ready() -> void:
@@ -58,34 +61,37 @@ func _physics_process(delta):
 
 
 func update_debug_labels():
-	get_node("Name").text = "Name: " + str(name)
-	get_node("Target").text = "Target: " + str(target_to_follow.name)
-
-
-#func select_target():
-#	if target_to_follow != null:
-#		return
-#	var potential_targets := get_tree().get_nodes_in_group("minions")
-#	potential_targets.append(get_tree().get_nodes_in_group("necrobotanist").front())
-#	var nearest_target = 
-#	for target in potential_targets:
-#
+	get_node("Debug/Name").text = "Name: " + str(name)
+	get_node("Debug/Target").text = debug_status_text + str(target_to_follow.name)
 
 
 func follow_target():
 	input = Vector2.ZERO
+	# Do not move if stuck in the same general area
+	if jitter_stop:
+		debug_status_text = "Still: "
+		return
+	debug_status_text = "Chase: "
 	if target_to_follow == null:
 #		input = Vector2.ZERO
 		return
-	if target_to_follow.position.y > position.y:
-		input.x = -0.2
-	if (target_to_follow.position - position).abs().length() <= STOP_DISTANCE:
+	var within_stop_distance = (target_to_follow.position - position).abs().length() <= STOP_DISTANCE
+	# Move to the side if on top of target
+#	if target_to_follow.position.y > position.y and within_stop_distance:
+#		if target_to_follow.position.x <= position.x:
+#			input.x = -0.5
+#		elif target_to_follow.position.x > position.x:
+#			input.x = 0.5
+	# If within stop distance, stop
+	if within_stop_distance:
 #		input = Vector2.ZERO
 		return
+	# Move to the left or right towards target
 	if target_to_follow.position.x < position.x:
 		input.x = -1
 	elif target_to_follow.position.x > position.x:
 		input.x = 1
+	# Jump if the target is higher up
 	if target_to_follow.position.y < position.y:
 		input.y = 1
 	# Currently no need for shifting movement down other than by falling
@@ -175,3 +181,11 @@ func handle_collisions():
 	if jump_state == JumpState.GROUNDED and not is_on_floor():
 		jump_state = JumpState.FALLING
 		emit_signal("felloff")
+
+
+func _on_JitterCheck_timeout() -> void:
+	if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
+		jitter_stop = true
+	else:
+		jitter_stop_target_pos = target_to_follow.position
+		jitter_stop = false
