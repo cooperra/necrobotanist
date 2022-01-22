@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Entities/Necrobotanist/Necrobotanist.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 400, 60 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 200.5, 60 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 200.5, 10.5 )
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="LevelTiles" type="TileMap" parent="."]
+format = 1
+
+[node name="TestFloor" type="StaticBody2D" parent="."]
+position = Vector2( 530, 464 )
+
+[node name="Icon" type="Sprite" parent="TestFloor"]
+scale = Vector2( 12.44, 1.92 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestFloor"]
+shape = SubResource( 1 )
+
+[node name="TestCeiling" type="StaticBody2D" parent="."]
+position = Vector2( 602, 127 )
+
+[node name="Icon" type="Sprite" parent="TestCeiling"]
+scale = Vector2( 6.44, 1.8 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestCeiling"]
+shape = SubResource( 2 )
+
+[node name="TestPlatform" type="StaticBody2D" parent="."]
+position = Vector2( 653, 323 )
+
+[node name="Icon" type="Sprite" parent="TestPlatform"]
+scale = Vector2( 6.44, 0.4 )
+texture = ExtResource( 2 )
+
+[node name="OneWayCollisionShape2D" type="CollisionShape2D" parent="TestPlatform"]
+shape = SubResource( 3 )
+one_way_collision = true
+
+[node name="Necrobotanist" parent="." instance=ExtResource( 1 )]
+position = Vector2( 342, 338 )
+
+[node name="Camera2D" type="Camera2D" parent="Necrobotanist"]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.5
