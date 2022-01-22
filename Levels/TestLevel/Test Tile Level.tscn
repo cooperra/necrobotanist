@@ -595,13 +595,13 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [node name="Test Tile Level" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Collision" type="TileMap" parent="."]
 tile_set = SubResource( 48 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 65541, 9, 0, 65541, 65536, 0, 262146, 65537, 0, 7, 65544, 0, 6, 65545, 0, 262147, 131072, 0, 65542, 131073, 0, 327685, 131074, 0, 2, 131075, 0, 2, 131076, 0, 2, 131077, 0, 2, 131078, 0, 2, 131079, 0, 2, 131080, 0, 327684, 131081, 0, 65543 )
 
-[node name="Necrobotanist" parent="TileMap" instance=ExtResource( 2 )]
-position = Vector2( 307, -33 )
-
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 294, 0 )
+
+[node name="Necrobotanist" parent="." instance=ExtResource( 2 )]
+position = Vector2( 307, -33 )
