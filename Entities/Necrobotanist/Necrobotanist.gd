@@ -10,6 +10,8 @@ signal felloff  # emitted when ground is no longer underfoot, but we didn't jump
 signal facing_changed  # emitted when the character turns around (the new facing direction is passed as an arg)
 signal walking_started  # emitted when the character starts walking (even in air)
 signal walking_stopped  # emitted when the character stops lateral movement
+# Signals for minions
+signal new_waypoint
 
 enum JumpState {GROUNDED, RISING, FALLING}
 enum Facing {LEFT, RIGHT}
@@ -139,3 +141,14 @@ func handle_collisions():
 	if jump_state == JumpState.GROUNDED and not is_on_floor():
 		jump_state = JumpState.FALLING
 		emit_signal("felloff")
+
+
+func check_for_new_waypoints():
+	# If just changed Y direction, place a vertical speed waypoint
+	# Else, if sufficiently far from previous waypoint, place a normal waypoint
+	# Else, do nothing
+	pass
+
+
+func place_new_waypoint():
+	pass
