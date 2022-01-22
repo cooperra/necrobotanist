@@ -1,7 +1,9 @@
-[gd_scene load_steps=98 format=2]
+[gd_scene load_steps=101 format=2]
 
 [ext_resource path="res://Sprites/Tiles/test_tilesheet_complete.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Necrobotanist/Necrobotanist.tscn" type="PackedScene" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Entities/Minion/Minion.gd" type="Script" id=4]
 
 [sub_resource type="OccluderPolygon2D" id=49]
 polygon = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -593,6 +595,9 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 0/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=96]
+extents = Vector2( 16, 29 )
+
 [node name="Test Tile Level" type="Node2D"]
 
 [node name="Collision" type="TileMap" parent="."]
@@ -605,3 +610,17 @@ offset = Vector2( 294, 0 )
 
 [node name="Necrobotanist" parent="." instance=ExtResource( 2 )]
 position = Vector2( 307, -33 )
+
+[node name="Minion" type="KinematicBody2D" parent="."]
+position = Vector2( 33.089, -35.907 )
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Minion"]
+scale = Vector2( 0.5, 0.9 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Minion"]
+position = Vector2( -0.0890007, -0.0929985 )
+shape = SubResource( 96 )
+
+[node name="JumpTween" type="Tween" parent="Minion"]
