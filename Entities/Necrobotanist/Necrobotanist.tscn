@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames02.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames03.png" type="Texture" id=7]
 
+
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ],
