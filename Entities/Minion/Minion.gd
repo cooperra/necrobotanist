@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-# These signals should help with animation
-# Signals guide: https://docs.godotengine.org/en/stable/getting_started/step_by_step/signals.html
 signal landed  # emitted upon landing on the ground
 signal jumped  # emitted when a jump begins
 signal jump_peaked  # emitted when hitting the peak of a jump
@@ -10,11 +8,9 @@ signal felloff  # emitted when ground is no longer underfoot, but we didn't jump
 signal facing_changed  # emitted when the character turns around (the new facing direction is passed as an arg)
 signal walking_started  # emitted when the character starts walking (even in air)
 signal walking_stopped  # emitted when the character stops lateral movement
-# Signals for minions
-signal new_waypoint
 
 enum JumpState {GROUNDED, RISING, FALLING}
-enum Facing {RIGHT, LEFT}
+enum Facing {LEFT, RIGHT}
 
 # Physics state
 export var velocity := Vector2(0, 0)
@@ -42,25 +38,81 @@ export var FALL_MAX_SPEED = 600
 export var FALL_START_SPEED = 200
 export var FALL_ACCEL = 900
 
+# AI information
+var input := Vector2(0, 0)
+export var STOP_DISTANCE := 3.0
+var target_to_follow: Node2D
+var jitter_stop := false
+var jitter_stop_target_pos := Vector2.ZERO
+var debug_status_text := "Chase"
+var stuck := false
+var STUCK_DISTANCE := 10
+var stuck_location := Vector2.ZERO
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
+func _ready() -> void:
+	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 func _physics_process(delta):
+	update_debug_labels()
+	follow_target()
 	handle_horiz_input(delta)
 	handle_jump_state(delta)
-	velocity = move_and_slide_with_snap(velocity, up_direction.rotated(PI), up_direction)
+	velocity = move_and_slide(velocity, up_direction)
 	handle_collisions()
 
 
+func update_debug_labels():
+	get_node("Debug/Name").text = "Name: " + str(name)
+	get_node("Debug/Target").text = debug_status_text + str(target_to_follow.name)
+
+
+func follow_target():
+	input = Vector2.ZERO
+	# Jump if stuck
+	if stuck and not jitter_stop:
+		input.y = 1
+		if target_to_follow.position.x < position.x:
+			input.x = -1
+		elif target_to_follow.position.x > position.x:
+			input.x = 1
+		debug_status_text = "Jumping To: "
+		return
+	# Do not move if target stuck in the same general area
+	if jitter_stop:
+		debug_status_text = "Still: "
+		return
+	debug_status_text = "Chase: "
+	if target_to_follow == null:
+#		input = Vector2.ZERO
+		return
+	var within_stop_distance = (target_to_follow.position - position).abs().length() <= STOP_DISTANCE
+	# Move to the side if on top of target
+#	if target_to_follow.position.y > position.y and within_stop_distance:
+#		if target_to_follow.position.x <= position.x:
+#			input.x = -0.5
+#		elif target_to_follow.position.x > position.x:
+#			input.x = 0.5
+	# If within stop distance, stop
+	if within_stop_distance:
+#		input = Vector2.ZERO
+		return
+	# Move to the left or right towards target
+	if target_to_follow.position.x < position.x:
+		input.x = -1
+	elif target_to_follow.position.x > position.x:
+		input.x = 1
+	# Jump if the target is higher up
+	if target_to_follow.position.y < position.y:
+		input.y = 1
+	# Currently no need for shifting movement down other than by falling
+#	elif target_to_follow.position.y > position.y:
+#		input.x = -0.5
+
+
 func handle_horiz_input(delta):
-	var horiz_axis = Input.get_axis("move_left", "move_right")
+	var horiz_axis = input.x
 	# Start with a minimum speed and accelerate from there
 	if horiz_axis > 0:
 		velocity.x = max(velocity.x, WALK_START_SPEED)
@@ -101,12 +153,12 @@ func handle_jump_state(delta):
 				emit_signal("jump_peaked")
 		JumpState.GROUNDED:
 			# TODO Check to see if we've fallen off a platform  # TODO emit felloff
-			if Input.is_action_just_pressed("jump"):
+			if input.y > 0:
 				# Begin jump
 
 				# Handy debug way to get extra-height
 				var mult = 1
-				if Input.is_action_pressed("ui_up"):
+				if input.y > 0: # TODO: Reconsider this for minions?
 					mult = 2
 
 				var jump_peak_y = position.y - JUMP_HEIGHT * mult
@@ -143,12 +195,14 @@ func handle_collisions():
 		emit_signal("felloff")
 
 
-func check_for_new_waypoints():
-	# If just changed Y direction, place a vertical speed waypoint
-	# Else, if sufficiently far from previous waypoint, place a normal waypoint
-	# Else, do nothing
-	pass
-
-
-func place_new_waypoint():
-	pass
+func _on_JitterCheck_timeout() -> void:
+	
+	if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
+		jitter_stop = true
+	else:
+		jitter_stop_target_pos = target_to_follow.position
+		jitter_stop = false
+	if is_on_wall():
+		stuck = true
+	else:
+		stuck = false

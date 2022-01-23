@@ -1,7 +1,13 @@
-[gd_scene load_steps=98 format=2]
+[gd_scene load_steps=102 format=2]
 
 [ext_resource path="res://Sprites/Tiles/test_tilesheet_complete.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Necrobotanist/Necrobotanist.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/Minion/Minion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/Waypoint/Waypoint.gd" type="Script" id=5]
+[ext_resource path="res://Entities/Minion/MinionManager.gd" type="Script" id=6]
+
+[sub_resource type="CircleShape2D" id=97]
+radius = 30.0
 
 [sub_resource type="OccluderPolygon2D" id=49]
 polygon = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -595,13 +601,59 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [node name="Test Tile Level" type="Node2D"]
 
+[node name="Necrobotanist" parent="." instance=ExtResource( 2 )]
+position = Vector2( 307, -33 )
+
+[node name="Camera2D" type="Camera2D" parent="Necrobotanist"]
+position = Vector2( -307, 33 )
+offset = Vector2( 294, 0 )
+current = true
+
+[node name="Minion" parent="." instance=ExtResource( 3 )]
+position = Vector2( 25, -91 )
+STOP_DISTANCE = 200.0
+
+[node name="Minion2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 372, -315 )
+STOP_DISTANCE = 200.0
+
+[node name="Minion3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 578, -175 )
+STOP_DISTANCE = 200.0
+
+[node name="Minion4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 499, -93 )
+STOP_DISTANCE = 200.0
+
+[node name="Minion5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 136, -9 )
+STOP_DISTANCE = 200.0
+
+[node name="Minion6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 92, -220 )
+STOP_DISTANCE = 200.0
+
+[node name="Minion7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 279, -153 )
+STOP_DISTANCE = 200.0
+
+[node name="Waypoint" type="Area2D" parent="." groups=["waypoint"]]
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Waypoint"]
+shape = SubResource( 97 )
+
 [node name="Collision" type="TileMap" parent="."]
 tile_set = SubResource( 48 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 65541, 9, 0, 65541, 65536, 0, 262146, 65537, 0, 7, 65544, 0, 6, 65545, 0, 262147, 131072, 0, 65542, 131073, 0, 327685, 131074, 0, 2, 131075, 0, 2, 131076, 0, 2, 131077, 0, 2, 131078, 0, 2, 131079, 0, 2, 131080, 0, 327684, 131081, 0, 65543 )
+tile_data = PoolIntArray( -393187, 0, 65541, -327652, 0, 6, -327651, 0, 262145, -327650, 0, 2, -327649, 0, 2, -327648, 0, 2, -327647, 0, 2, -327646, 0, 1, -262117, 0, 6, -262116, 0, 196609, -262115, 0, 131077, -262110, 0, 65538, -196582, 0, 6, -196581, 0, 196609, -196580, 0, 131072, -196579, 0, 65543, -196574, 0, 65538, -131047, 0, 6, -131046, 0, 196609, -131045, 0, 131072, -131044, 0, 65543, -131038, 0, 65538, -65512, 0, 6, -65511, 0, 196609, -65510, 0, 131078, -65509, 0, 131077, -65502, 0, 65536, -65501, 0, 1, 0, 0, 65541, 9, 0, 65541, 22, 0, 6, 23, 0, 196612, 24, 0, 196609, 25, 0, 131078, 26, 0, 131072, 27, 0, 65543, 35, 0, 65536, 36, 0, 1, 131071, 0, 6, 65536, 0, 131075, 65537, 0, 7, 65544, 0, 6, 65545, 0, 131075, 65546, 0, 7, 65557, 0, 6, 65558, 0, 196609, 65559, 0, 131078, 65560, 0, 131078, 65561, 0, 131078, 65562, 0, 131077, 65572, 0, 262146, 65573, 0, 7, 196600, 0, 262151, 196601, 0, 2, 196602, 0, 2, 196603, 0, 2, 196604, 0, 2, 196605, 0, 2, 196606, 0, 2, 196607, 0, 327684, 131072, 0, 196613, 131073, 0, 327685, 131074, 0, 2, 131075, 0, 2, 131076, 0, 2, 131077, 0, 2, 131078, 0, 2, 131079, 0, 2, 131080, 0, 327684, 131081, 0, 196613, 131082, 0, 327685, 131083, 0, 2, 131084, 0, 2, 131085, 0, 2, 131086, 0, 2, 131087, 0, 2, 131088, 0, 2, 131089, 0, 2, 131090, 0, 2, 131091, 0, 2, 131092, 0, 2, 131093, 0, 327684, 131094, 0, 196613, 131095, 0, 196613, 131096, 0, 196613, 131097, 0, 196613, 131098, 0, 262150, 131099, 0, 196612, 131100, 0, 196612, 131101, 0, 196612, 131102, 0, 196612, 131103, 0, 196612, 131104, 0, 196612, 131105, 0, 196612, 131106, 0, 196612, 131107, 0, 196612, 131108, 0, 196609, 131109, 0, 196608, 131110, 0, 7, 196634, 0, 65542, 196635, 0, 196613, 196636, 0, 196613, 196637, 0, 196613, 196638, 0, 196613, 196639, 0, 196613, 196640, 0, 196613, 196641, 0, 196613, 196642, 0, 196613, 196643, 0, 196613, 196644, 0, 196613, 196645, 0, 196613, 196646, 0, 65543 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2( 294, 0 )
+[node name="MinionManager" type="Node" parent="."]
+script = ExtResource( 6 )
 
-[node name="Necrobotanist" parent="." instance=ExtResource( 2 )]
-position = Vector2( 307, -33 )
+[node name="CheckFrequency" type="Timer" parent="MinionManager"]
+autostart = true
+
+[connection signal="body_entered" from="Waypoint" to="Waypoint" method="_on_Waypoint_body_entered"]
+[connection signal="body_exited" from="Waypoint" to="Waypoint" method="_on_Waypoint_body_exited"]
+[connection signal="timeout" from="MinionManager/CheckFrequency" to="MinionManager" method="_on_Timer_timeout"]
