@@ -53,7 +53,7 @@ func _ready():
 func _physics_process(delta):
 	handle_horiz_input(delta)
 	handle_jump_state(delta)
-	velocity = move_and_slide(velocity, up_direction)
+	velocity = move_and_slide_with_snap(velocity, up_direction.rotated(PI), up_direction)
 	handle_collisions()
 
 
