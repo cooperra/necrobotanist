@@ -4,8 +4,10 @@ extends Node2D
 # Declare member variables here.
 var current_tip : Node2D
 export(PackedScene) var stem_segment_scene = preload("res://Entities/Plant/StemSegment.tscn")
-export(int) var pending_growth = 1
+export(PackedScene) var stem_leaf_scene = preload("res://Entities/Plant/Leaf.tscn")
+export(int) var pending_growth = 1  # seed instantly becomes sprout
 export(int) var growth_level = 0
+export(int) var next_leaf_goes_left = -1  # random
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,12 +18,18 @@ func _ready():
 	while current_tip.get_child_count() > 0:
 		current_tip = current_tip.get_child(0)
 		stem_count += 1
-	# If growth_level is more than we've actually grown so far, catch up
+
+	# Randomize leaf direction if needed
+	if next_leaf_goes_left == -1:
+		next_leaf_goes_left = bool(randi() % 2)
+
+	# If growth_level is more than we've actually grown so far, instantly grow to catch up
 	if growth_level > 0:
 		# Set frame to fully sprouted
 		$SproutSprite.frame = 3
 	while growth_level > stem_count+1:
 		_add_stem_segment()
+		_add_next_leaf()
 		stem_count += 1
 	check_growth()
 
@@ -57,3 +65,17 @@ func _add_stem_segment():
 	current_tip = new_stem_segment.get_child(0)
 	# Remove old tip
 	old_tip.queue_free()
+
+
+func _add_next_leaf():
+	# Create new leaf
+	var new_leaf = stem_leaf_scene.instance()
+	var current_stem = current_tip.get_parent()
+	if next_leaf_goes_left:
+		new_leaf.position = current_stem.get_node("LeafLPlaceholder").position
+	else:
+		new_leaf.position = current_stem.get_node("LeafRPlaceholder").position
+	# Attach leaf
+	current_stem.add_child(new_leaf)
+	# Swap direction for next time
+	next_leaf_goes_left = not next_leaf_goes_left

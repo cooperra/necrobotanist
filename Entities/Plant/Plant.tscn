@@ -60,11 +60,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.05, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.05, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "_add_stem_segment"
+}, {
+"args": [  ],
+"method": "_add_next_leaf"
 }, {
 "args": [  ],
 "method": "check_growth"
