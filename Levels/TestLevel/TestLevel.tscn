@@ -20,7 +20,7 @@ extents = Vector2( 200.5, 10.5 )
 [node name="LevelTiles" type="TileMap" parent="."]
 format = 1
 
-[node name="TestFloor" type="StaticBody2D" parent="."]
+[node name="TestFloor" type="StaticBody2D" parent="." groups=["plantable"]]
 position = Vector2( 530, 464 )
 
 [node name="Icon" type="Sprite" parent="TestFloor"]
@@ -30,7 +30,7 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestFloor"]
 shape = SubResource( 1 )
 
-[node name="TestCeiling" type="StaticBody2D" parent="."]
+[node name="TestCeiling" type="StaticBody2D" parent="." groups=["plantable"]]
 position = Vector2( 602, 127 )
 
 [node name="Icon" type="Sprite" parent="TestCeiling"]
