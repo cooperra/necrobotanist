@@ -73,6 +73,10 @@ func follow_target():
 	# Jump if stuck
 	if stuck and not jitter_stop:
 		input.y = 1
+		if target_to_follow.position.x < position.x:
+			input.x = -1
+		elif target_to_follow.position.x > position.x:
+			input.x = 1
 		debug_status_text = "Jumping To: "
 		return
 	# Do not move if target stuck in the same general area
@@ -192,15 +196,13 @@ func handle_collisions():
 
 
 func _on_JitterCheck_timeout() -> void:
-	if is_on_wall():
-		print("wall" + str(name))
-		stuck = true
-		return
-	else:
-		stuck = false
 	
 	if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
 		jitter_stop = true
 	else:
 		jitter_stop_target_pos = target_to_follow.position
 		jitter_stop = false
+	if is_on_wall():
+		stuck = true
+	else:
+		stuck = false
