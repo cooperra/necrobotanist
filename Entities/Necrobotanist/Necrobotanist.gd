@@ -12,7 +12,7 @@ signal walking_started  # emitted when the character starts walking (even in air
 signal walking_stopped  # emitted when the character stops lateral movement
 
 enum JumpState {GROUNDED, RISING, FALLING}
-enum Facing {LEFT, RIGHT}
+enum Facing {RIGHT, LEFT}
 
 # Physics state
 export var velocity := Vector2(0, 0)
