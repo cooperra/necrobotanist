@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Entities/Necrobotanist/Necrobotanist.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames04.png" type="Texture" id=2]
@@ -7,18 +7,159 @@
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames01.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames02.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames03.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk05.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle06.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle05.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Necrobotanist/flash.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle02.png" type="Texture" id=12]
+[ext_resource path="res://Entities/Necrobotanist/NectrobotanistAnimationTree.gd" type="Script" id=13]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk02.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle04.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle00.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle03.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/Necrobotanist/necro_idle01.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk00.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk01.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk04.png" type="Texture" id=21]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk06.png" type="Texture" id=22]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk03.png" type="Texture" id=23]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk09.png" type="Texture" id=24]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk07.png" type="Texture" id=25]
+[ext_resource path="res://Sprites/Necrobotanist/necro_walk08.png" type="Texture" id=26]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 18 ), ExtResource( 12 ), ExtResource( 17 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "idle",
+"speed": 6.0
+}, {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 23 ), ExtResource( 21 ), ExtResource( 8 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "seed_throw",
 "speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 29.0
 height = 52.0
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "fall"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "idle_to_walk"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "land"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "rise"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "walk"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "walk_to_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+advance_condition = "rising"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+advance_condition = "falling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+advance_condition = "grounded"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+advance_condition = "walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+advance_condition = "grounded"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+advance_condition = "rising"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+advance_condition = "walking"
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+advance_condition = "not_walking"
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+advance_condition = "falling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=43]
+advance_condition = "falling"
+
+[sub_resource type="AnimationNodeStateMachine" id=28]
+states/fall/node = SubResource( 8 )
+states/fall/position = Vector2( 449, -61 )
+states/idle/node = SubResource( 9 )
+states/idle/position = Vector2( 187, 160 )
+states/idle_to_walk/node = SubResource( 10 )
+states/idle_to_walk/position = Vector2( 367, 125 )
+states/jump/node = SubResource( 11 )
+states/jump/position = Vector2( 282, 22 )
+states/land/node = SubResource( 12 )
+states/land/position = Vector2( 449, 22 )
+states/rise/node = SubResource( 13 )
+states/rise/position = Vector2( 282, -61 )
+states/walk/node = SubResource( 14 )
+states/walk/position = Vector2( 560, 160 )
+states/walk_to_idle/node = SubResource( 15 )
+states/walk_to_idle/position = Vector2( 367, 196 )
+transitions = [ "idle", "jump", SubResource( 16 ), "jump", "rise", SubResource( 17 ), "rise", "fall", SubResource( 18 ), "rise", "land", SubResource( 19 ), "land", "walk", SubResource( 20 ), "fall", "land", SubResource( 21 ), "walk", "jump", SubResource( 22 ), "land", "idle", SubResource( 23 ), "idle", "walk", SubResource( 40 ), "walk", "idle", SubResource( 41 ), "idle", "fall", SubResource( 42 ), "walk", "fall", SubResource( 43 ) ]
+start_node = "idle"
+graph_offset = Vector2( -120, -82 )
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "seed_throw"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=32]
+states/Locomotion/node = SubResource( 28 )
+states/Locomotion/position = Vector2( 366, 126 )
+states/seed_throw/node = SubResource( 29 )
+states/seed_throw/position = Vector2( 642, 126 )
+transitions = [ "Locomotion", "seed_throw", SubResource( 30 ), "seed_throw", "Locomotion", SubResource( 31 ) ]
+start_node = "Locomotion"
+graph_offset = Vector2( -64, -80 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=33]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=34]
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -34,6 +175,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "jump" ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "fall"
@@ -45,10 +198,79 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 3, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ "jump" ]
+}
+
+[sub_resource type="Animation" id=35]
+resource_name = "idle"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+
+[sub_resource type="Animation" id=36]
+resource_name = "idle_to_walk"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "walk" ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -67,9 +289,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 1, 2 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "jump" ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "land"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -82,6 +317,145 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 4, 0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "jump" ]
+}
+
+[sub_resource type="Animation" id=37]
+resource_name = "rise"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "jump" ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "seed_throw"
+length = 0.2
+step = 0.05
+tracks/0/type = "method"
+tracks/0/path = NodePath("SeedThrower")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "throw_seed"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.15 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.15 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "seed_throw" ]
+}
+
+[sub_resource type="Animation" id=38]
+resource_name = "walk"
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15, 0.3, 0.45, 0.6, 0.65, 0.75, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "walk" ]
+}
+
+[sub_resource type="Animation" id=39]
+resource_name = "walk_to_idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "walk" ]
+}
 
 [node name="Necrobotanist" type="KinematicBody2D" groups=["necrobotanist"]]
 script = ExtResource( 1 )
@@ -92,6 +466,7 @@ frames = SubResource( 2 )
 animation = "jump"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="JumpTween" type="Tween" parent="."]
@@ -100,16 +475,38 @@ shape = SubResource( 1 )
 position = Vector2( 41, -39 )
 script = ExtResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 32 )
+anim_player = NodePath("AnimationPlayer")
+active = true
+parameters/playback = SubResource( 33 )
+parameters/Locomotion/playback = SubResource( 34 )
+parameters/Locomotion/conditions/falling = false
+parameters/Locomotion/conditions/grounded = false
+parameters/Locomotion/conditions/not_walking = false
+parameters/Locomotion/conditions/rising = false
+parameters/Locomotion/conditions/walking = false
+script = ExtResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
+root_node = NodePath("../..")
 anims/RESET = SubResource( 3 )
 anims/fall = SubResource( 4 )
+anims/idle = SubResource( 35 )
+anims/idle_to_walk = SubResource( 36 )
 anims/jump = SubResource( 5 )
 anims/land = SubResource( 6 )
+anims/rise = SubResource( 37 )
+anims/seed_throw = SubResource( 7 )
+anims/walk = SubResource( 38 )
+anims/walk_to_idle = SubResource( 39 )
 
-[connection signal="ceiling_bonked" from="." to="AnimationPlayer" method="play" binds= [ "fall" ]]
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="facing_changed" from="." to="SeedThrower" method="_on_Necrobotanist_facing_changed"]
-[connection signal="felloff" from="." to="AnimationPlayer" method="play" binds= [ "fall" ]]
-[connection signal="jump_peaked" from="." to="AnimationPlayer" method="play" binds= [ "fall" ]]
-[connection signal="jumped" from="." to="AnimationPlayer" method="play" binds= [ "jump" ]]
-[connection signal="landed" from="." to="AnimationPlayer" method="play" binds= [ "land" ]]
+[connection signal="felloff" from="." to="AnimationTree" method="_on_Necrobotanist_felloff"]
+[connection signal="jump_peaked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
+[connection signal="jumped" from="." to="AnimationTree" method="_on_Necrobotanist_jumped"]
+[connection signal="landed" from="." to="AnimationTree" method="_on_Necrobotanist_landed"]
+[connection signal="walking_started" from="." to="AnimationTree" method="_on_Necrobotanist_walking_started"]
+[connection signal="walking_stopped" from="." to="AnimationTree" method="_on_Necrobotanist_walking_stopped"]
+[connection signal="seed_throw_started" from="SeedThrower" to="AnimationTree" method="_on_SeedThrower_seed_throw_started"]

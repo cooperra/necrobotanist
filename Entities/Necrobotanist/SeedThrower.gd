@@ -1,6 +1,9 @@
 extends Node2D
 
 
+signal seed_throw_started
+
+
 # Declare member variables here.
 export(Vector2) var throw_velocity = Vector2(300, -300)
 export(float) var throw_angular_velocity = 5.0
@@ -33,7 +36,7 @@ func _on_Necrobotanist_facing_changed(new_facing):
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("throw_seed"):
-		throw_seed()
+		emit_signal("seed_throw_started")
 		get_tree().set_input_as_handled()
 
 
