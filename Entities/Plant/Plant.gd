@@ -79,3 +79,9 @@ func _add_next_leaf():
 	current_stem.add_child(new_leaf)
 	# Swap direction for next time
 	next_leaf_goes_left = not next_leaf_goes_left
+
+
+func fertilize(amount: int):
+	# Add amount of fertilizer
+	pending_growth += amount
+	check_growth()
