@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/Plant/plant_tilesset.png" type="Texture" id=1]
+
+[node name="StemSegment" type="Sprite"]
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -32, -76 )
+hframes = 6
+frame = 4
+
+[node name="Tip" type="Sprite" parent="."]
+position = Vector2( 0, -50 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -32, -76 )
+hframes = 6
+frame = 5
