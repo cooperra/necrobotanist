@@ -45,6 +45,9 @@ var target_to_follow: Node2D
 var jitter_stop := false
 var jitter_stop_target_pos := Vector2.ZERO
 var debug_status_text := "Chase"
+var stuck := false
+var STUCK_DISTANCE := 10
+var stuck_location := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -67,7 +70,12 @@ func update_debug_labels():
 
 func follow_target():
 	input = Vector2.ZERO
-	# Do not move if stuck in the same general area
+	# Jump if stuck
+	if stuck and not jitter_stop:
+		input.y = 1
+		debug_status_text = "Jumping To: "
+		return
+	# Do not move if target stuck in the same general area
 	if jitter_stop:
 		debug_status_text = "Still: "
 		return
@@ -184,6 +192,13 @@ func handle_collisions():
 
 
 func _on_JitterCheck_timeout() -> void:
+	if is_on_wall():
+		print("wall" + str(name))
+		stuck = true
+		return
+	else:
+		stuck = false
+	
 	if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
 		jitter_stop = true
 	else:
