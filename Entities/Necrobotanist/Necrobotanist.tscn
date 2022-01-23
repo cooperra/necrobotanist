@@ -1,16 +1,95 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Entities/Necrobotanist/Necrobotanist.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames04.png" type="Texture" id=2]
 [ext_resource path="res://Entities/Necrobotanist/SeedThrower.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames00.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames01.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames02.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames03.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+} ]
 
 [sub_resource type="CapsuleShape2D" id=1]
+radius = 29.0
+height = 52.0
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "fall"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "jump"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 2 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "land"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 0 ]
+}
 
 [node name="Necrobotanist" type="KinematicBody2D" groups=["necrobotanist"]]
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+[node name="Sprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 2 )
+animation = "jump"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -21,4 +100,16 @@ shape = SubResource( 1 )
 position = Vector2( 41, -39 )
 script = ExtResource( 3 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/fall = SubResource( 4 )
+anims/jump = SubResource( 5 )
+anims/land = SubResource( 6 )
+
+[connection signal="ceiling_bonked" from="." to="AnimationPlayer" method="play" binds= [ "fall" ]]
+[connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="facing_changed" from="." to="SeedThrower" method="_on_Necrobotanist_facing_changed"]
+[connection signal="felloff" from="." to="AnimationPlayer" method="play" binds= [ "fall" ]]
+[connection signal="jump_peaked" from="." to="AnimationPlayer" method="play" binds= [ "fall" ]]
+[connection signal="jumped" from="." to="AnimationPlayer" method="play" binds= [ "jump" ]]
+[connection signal="landed" from="." to="AnimationPlayer" method="play" binds= [ "land" ]]

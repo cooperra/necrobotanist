@@ -17,8 +17,8 @@ func _ready():
 #func _process(delta):
 #	pass
 
-const LEFT = 0
-const RIGHT = 1
+const LEFT = 1
+const RIGHT = 0
 func _on_Necrobotanist_facing_changed(new_facing):
 	match new_facing:
 		LEFT:
