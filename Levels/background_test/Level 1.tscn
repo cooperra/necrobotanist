@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Levels/General/Main Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Background/white_static2.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Sprites/Background/tree3.png" type="Texture" id=8]
 [ext_resource path="res://Entities/Goal/Goal.tscn" type="PackedScene" id=9]
 [ext_resource path="res://UI/WinScreen.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Music/necrobotanist_final_full.mp3" type="AudioStream" id=11]
+[ext_resource path="res://UI/PauseOverlay.tscn" type="PackedScene" id=12]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -84,5 +86,11 @@ drag_margin_v_enabled = true
 drag_margin_left = 0.5
 
 [node name="Goal" parent="." instance=ExtResource( 9 )]
-position = Vector2( 973, -11 )
+position = Vector2( 825, -203 )
 next_scene = ExtResource( 10 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+autoplay = true
+
+[node name="PauseOverlay" parent="." instance=ExtResource( 12 )]
