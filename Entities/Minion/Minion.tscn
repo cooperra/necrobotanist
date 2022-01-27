@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://Entities/Minion/Minion.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Zombie/bornwalkjumpdie03.png" type="Texture" id=2]
@@ -168,6 +168,21 @@ tracks/0/keys = {
 "values": [ 12 ]
 }
 
+[sub_resource type="Animation" id=120]
+resource_name = "decompose"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 23, 27, 27 ]
+}
+
 [sub_resource type="Animation" id=102]
 resource_name = "fall"
 length = 0.2
@@ -296,6 +311,21 @@ tracks/0/keys = {
 "values": [ 13 ]
 }
 
+[sub_resource type="Animation" id=121]
+resource_name = "unbury"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 5 ]
+}
+
 [sub_resource type="Animation" id=109]
 resource_name = "walk"
 length = 0.7
@@ -389,6 +419,7 @@ script = ExtResource( 30 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
 root_node = NodePath("../..")
 anims/RESET = SubResource( 101 )
+anims/decompose = SubResource( 120 )
 anims/fall = SubResource( 102 )
 anims/flip = SubResource( 117 )
 anims/idle = SubResource( 103 )
@@ -396,6 +427,7 @@ anims/idle_to_walk = SubResource( 104 )
 anims/jump = SubResource( 105 )
 anims/land = SubResource( 106 )
 anims/rise = SubResource( 107 )
+anims/unbury = SubResource( 121 )
 anims/walk = SubResource( 109 )
 anims/walk_to_idle = SubResource( 110 )
 
