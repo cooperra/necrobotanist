@@ -165,7 +165,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0 ]
+"values": [ 12 ]
 }
 
 [sub_resource type="Animation" id=102]
@@ -339,7 +339,7 @@ __meta__ = {
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 97 )
-frame = 6
+frame = 12
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
