@@ -506,6 +506,7 @@ anims/rise = SubResource( 107 )
 anims/walk = SubResource( 109 )
 anims/walk_to_idle = SubResource( 110 )
 
+[connection signal="ceiling_bonked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="felloff" from="." to="AnimationTree" method="_on_Necrobotanist_felloff"]
 [connection signal="jump_peaked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]

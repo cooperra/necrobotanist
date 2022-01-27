@@ -526,6 +526,7 @@ volume_db = -10.0
 stream = ExtResource( 28 )
 volume_db = 10.0
 
+[connection signal="ceiling_bonked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="facing_changed" from="." to="SeedThrower" method="_on_Necrobotanist_facing_changed"]
 [connection signal="felloff" from="." to="AnimationTree" method="_on_Necrobotanist_felloff"]
