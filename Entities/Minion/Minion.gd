@@ -157,9 +157,9 @@ func handle_jump_state(delta):
 			if input.y > 0:
 				# Begin jump
 
-				# Handy debug way to get extra-height
+				# Let minions jump twice as high when they are stuck
 				var mult = 1
-				if input.y > 0: # TODO: Reconsider this for minions?
+				if stuck:
 					mult = 2
 
 				var jump_peak_y = position.y - JUMP_HEIGHT * mult
