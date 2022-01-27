@@ -5,7 +5,7 @@ extends Node2D
 var current_tip : Node2D
 export(PackedScene) var stem_segment_scene = preload("res://Entities/Plant/StemSegment.tscn")
 export(PackedScene) var stem_leaf_scene = preload("res://Entities/Plant/Leaf.tscn")
-export(int) var pending_growth = 1  # seed instantly becomes sprout
+export(int) var pending_growth = 4  # seed instantly becomes sprout
 export(int) var growth_level = 0
 export(int) var next_leaf_goes_left = -1  # random
 

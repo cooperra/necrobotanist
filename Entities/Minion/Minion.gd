@@ -196,7 +196,7 @@ func handle_collisions():
 
 
 func _on_JitterCheck_timeout() -> void:
-	
+
 	if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
 		jitter_stop = true
 	else:
