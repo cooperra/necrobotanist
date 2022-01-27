@@ -40,7 +40,7 @@ export var FALL_ACCEL = 900
 
 # AI information
 var input := Vector2(0, 0)
-export var STOP_DISTANCE := 3.0
+export var STOP_DISTANCE := 60
 var target_to_follow: Node2D
 var jitter_stop := false
 var jitter_stop_target_pos := Vector2.ZERO
