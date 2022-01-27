@@ -42,6 +42,7 @@ animations = [ {
 radius = 33.0
 
 [node name="Minion" type="KinematicBody2D" groups=["minion"]]
+collision_layer = 4
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
