@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Entities/Necrobotanist/Necrobotanist.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames04.png" type="Texture" id=2]
@@ -26,7 +26,8 @@
 [ext_resource path="res://Sprites/Necrobotanist/necro_walk09.png" type="Texture" id=24]
 [ext_resource path="res://Sprites/Necrobotanist/necro_walk07.png" type="Texture" id=25]
 [ext_resource path="res://Sprites/Necrobotanist/necro_walk08.png" type="Texture" id=26]
-
+[ext_resource path="res://Sounds/jump.mp3" type="AudioStream" id=27]
+[ext_resource path="res://Sounds/throw.wav" type="AudioStream" id=28]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -34,11 +35,6 @@ animations = [ {
 "loop": true,
 "name": "idle",
 "speed": 6.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "jump",
-"speed": 5.0
 }, {
 "frames": [ ExtResource( 19 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 23 ), ExtResource( 21 ), ExtResource( 8 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 24 ) ],
 "loop": true,
@@ -48,6 +44,11 @@ animations = [ {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "seed_throw",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "jump",
 "speed": 5.0
 } ]
 
@@ -502,12 +503,21 @@ anims/seed_throw = SubResource( 7 )
 anims/walk = SubResource( 38 )
 anims/walk_to_idle = SubResource( 39 )
 
+[node name="AudioStreamPlayer2DJump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 27 )
+
+[node name="AudioStreamPlayer2DThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 28 )
+volume_db = 24.0
+
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="facing_changed" from="." to="SeedThrower" method="_on_Necrobotanist_facing_changed"]
 [connection signal="felloff" from="." to="AnimationTree" method="_on_Necrobotanist_felloff"]
 [connection signal="jump_peaked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
 [connection signal="jumped" from="." to="AnimationTree" method="_on_Necrobotanist_jumped"]
+[connection signal="jumped" from="." to="AudioStreamPlayer2DJump" method="play"]
 [connection signal="landed" from="." to="AnimationTree" method="_on_Necrobotanist_landed"]
 [connection signal="walking_started" from="." to="AnimationTree" method="_on_Necrobotanist_walking_started"]
 [connection signal="walking_stopped" from="." to="AnimationTree" method="_on_Necrobotanist_walking_stopped"]
 [connection signal="seed_throw_started" from="SeedThrower" to="AnimationTree" method="_on_SeedThrower_seed_throw_started"]
+[connection signal="seed_thrown" from="SeedThrower" to="AudioStreamPlayer2DThrow" method="play"]

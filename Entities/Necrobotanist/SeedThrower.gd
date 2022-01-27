@@ -2,6 +2,7 @@ extends Node2D
 
 
 signal seed_throw_started
+signal seed_thrown
 
 
 # Declare member variables here.
@@ -46,3 +47,4 @@ func throw_seed():
 	new_seed.linear_velocity = throw_velocity
 	new_seed.angular_velocity = throw_angular_velocity
 	new_seed.global_position = self.global_position
+	emit_signal("seed_thrown")
