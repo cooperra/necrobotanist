@@ -522,7 +522,7 @@ stream = ExtResource( 27 )
 
 [node name="AudioStreamPlayer2DThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 28 )
-volume_db = 24.0
+volume_db = 10.0
 
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="facing_changed" from="." to="SeedThrower" method="_on_Necrobotanist_facing_changed"]
