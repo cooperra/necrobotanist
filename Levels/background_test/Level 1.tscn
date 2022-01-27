@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Levels/General/Main Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Background/white_static2.png" type="Texture" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://UI/WinScreen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Music/necrobotanist_final_full.mp3" type="AudioStream" id=11]
 [ext_resource path="res://UI/PauseOverlay.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Entities/Minion/Minion.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Entities/Minion/MinionManager.gd" type="Script" id=14]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -98,4 +100,20 @@ stream = ExtResource( 11 )
 volume_db = -10.0
 autoplay = true
 
+[node name="MinionManager" type="Node" parent="."]
+script = ExtResource( 14 )
+
+[node name="CheckFrequency" type="Timer" parent="MinionManager"]
+autostart = true
+
+[node name="Minion" parent="." instance=ExtResource( 13 )]
+position = Vector2( 375, 201 )
+
+[node name="Minion2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 538, 202 )
+
+[node name="Minion3" parent="." instance=ExtResource( 13 )]
+position = Vector2( -37, 151 )
+
 [connection signal="level_completed" from="Goal" to="AudioStreamPlayer" method="stop"]
+[connection signal="timeout" from="MinionManager/CheckFrequency" to="MinionManager" method="_on_Timer_timeout"]
