@@ -37,6 +37,10 @@ tile_data = PoolIntArray( -65548, 0, 262151, -65547, 0, 1, -11, 0, 65536, -10, 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="PauseOverlay" parent="CanvasLayer" instance=ExtResource( 12 )]
+margin_right = 64.0
+margin_bottom = 86.0
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
 scroll_offset = Vector2( 1, 1 )
 
@@ -47,7 +51,7 @@ motion_scale = Vector2( 0, 0 )
 position = Vector2( 0, -3.62499 )
 scale = Vector2( 0.491667, 0.414167 )
 frames = SubResource( 2 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
@@ -92,5 +96,3 @@ next_scene = ExtResource( 10 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
 autoplay = true
-
-[node name="PauseOverlay" parent="." instance=ExtResource( 12 )]
