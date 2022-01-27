@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Entities/Seed/Seed.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Seed/seed.png" type="Texture" id=2]
+[ext_resource path="res://Sounds/seed_impact.wav" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -27,4 +28,9 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 1 )
 
+[node name="AudioStreamPlayer2DImpact" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = 24.0
+
 [connection signal="tween_all_completed" from="FadeOut" to="." method="queue_free"]
+[connection signal="finished" from="AudioStreamPlayer2DImpact" to="AudioStreamPlayer2DImpact" method="queue_free"]
