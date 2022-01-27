@@ -96,3 +96,5 @@ next_scene = ExtResource( 10 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
 autoplay = true
+
+[connection signal="level_completed" from="Goal" to="AudioStreamPlayer" method="stop"]
