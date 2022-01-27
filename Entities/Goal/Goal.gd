@@ -28,12 +28,14 @@ func _on_Area2D_body_entered(body: Node2D):
 
 
 func _on_level_completed():
+	Engine.time_scale = 0.10
 	if skip_fanfare:
 		_on_VictoryFanfare_finished()
 	else:
 		$VictoryFanfare.play()
 
 func _on_VictoryFanfare_finished():
+	Engine.time_scale = 1.0
 	if debug_restart_current_level:
 		get_tree().reload_current_scene()
 	elif next_scene:
