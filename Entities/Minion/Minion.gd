@@ -104,7 +104,8 @@ func follow_target():
 	elif target_to_follow.position.x > position.x:
 		input.x = 1
 	# Jump if the target is higher up
-	if target_to_follow.position.y < position.y:
+	# Added some leeway
+	if target_to_follow.position.y + 30 < position.y:
 		input.y = 1
 	# Currently no need for shifting movement down other than by falling
 #	elif target_to_follow.position.y > position.y:
