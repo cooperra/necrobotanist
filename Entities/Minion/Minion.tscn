@@ -170,7 +170,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=102]
 resource_name = "fall"
-length = 0.1
+length = 0.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
