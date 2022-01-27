@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/necrobotanist_1.mp3-e0d00918a4dfcba964d32dfaf87f8cce.mp3str"
+
+[deps]
+
+source_file="res://Music/necrobotanist_1.mp3"
+dest_files=[ "res://.import/necrobotanist_1.mp3-e0d00918a4dfcba964d32dfaf87f8cce.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
