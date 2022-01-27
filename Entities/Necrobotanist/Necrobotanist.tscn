@@ -53,8 +53,8 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 29.0
-height = 52.0
+radius = 28.0
+height = 50.0
 
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "fall"
