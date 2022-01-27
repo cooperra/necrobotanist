@@ -8,8 +8,10 @@ signal seed_thrown
 # Declare member variables here.
 export(Vector2) var throw_velocity = Vector2(300, -300)
 export(float) var throw_angular_velocity = 5.0
-
 export(PackedScene) var seed_scene = preload("res://Entities/Seed/Seed.tscn")
+
+var throw_in_progress := false
+var throw_is_buffered := false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -37,8 +39,17 @@ func _on_Necrobotanist_facing_changed(new_facing):
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("throw_seed"):
-		emit_signal("seed_throw_started")
+		if throw_in_progress:
+			# We're already throwing, so buffer a throw for later
+			throw_is_buffered = true
+		else:
+			start_throw()
 		get_tree().set_input_as_handled()
+
+
+func start_throw():
+	throw_in_progress = true
+	emit_signal("seed_throw_started")
 
 
 func throw_seed():
@@ -48,3 +59,8 @@ func throw_seed():
 	new_seed.angular_velocity = throw_angular_velocity
 	new_seed.global_position = self.global_position
 	emit_signal("seed_thrown")
+	throw_in_progress = false
+	# Throw again if a throw is buffered
+	if throw_is_buffered:
+		throw_is_buffered = false
+		start_throw()
