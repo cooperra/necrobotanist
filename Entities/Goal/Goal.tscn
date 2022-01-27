@@ -2,11 +2,10 @@
 
 [ext_resource path="res://Entities/Goal/Goal.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Music/necrobonatist_fanfare.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
-
-[sub_resource type="AudioStreamRandomPitch" id=2]
 
 [node name="Goal" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,7 +20,7 @@ texture = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="VictoryFanfare" type="AudioStreamPlayer" parent="."]
-stream = SubResource( 2 )
+stream = ExtResource( 3 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="finished" from="VictoryFanfare" to="." method="_on_VictoryFanfare_finished"]
