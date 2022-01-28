@@ -82,15 +82,6 @@ position = Vector2( 27, -7 )
 scale = Vector2( 0.40819, 0.409333 )
 texture = ExtResource( 6 )
 
-[node name="Necrobotanist" parent="." instance=ExtResource( 5 )]
-position = Vector2( 80, 192 )
-
-[node name="Camera2D" type="Camera2D" parent="Necrobotanist"]
-current = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-drag_margin_left = 0.5
-
 [node name="Goal" parent="." instance=ExtResource( 9 )]
 position = Vector2( 825, -203 )
 next_scene = ExtResource( 10 )
@@ -114,6 +105,15 @@ position = Vector2( 538, 202 )
 
 [node name="Minion3" parent="." instance=ExtResource( 13 )]
 position = Vector2( -37, 151 )
+
+[node name="Necrobotanist" parent="." instance=ExtResource( 5 )]
+position = Vector2( 80, 192 )
+
+[node name="Camera2D" type="Camera2D" parent="Necrobotanist"]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.5
 
 [connection signal="level_completed" from="Goal" to="AudioStreamPlayer" method="stop"]
 [connection signal="timeout" from="MinionManager/CheckFrequency" to="MinionManager" method="_on_Timer_timeout"]
