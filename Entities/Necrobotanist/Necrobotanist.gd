@@ -16,6 +16,8 @@ signal new_waypoint
 enum JumpState {GROUNDED, RISING, FALLING}
 enum Facing {RIGHT, LEFT}
 
+export(bool) var debug = false
+
 # Physics state
 export var velocity := Vector2(0, 0)
 export(JumpState) var jump_state := JumpState.FALLING
@@ -106,7 +108,7 @@ func handle_jump_state(delta):
 
 				# Handy debug way to get extra-height
 				var mult = 1
-				if Input.is_action_pressed("up"):
+				if Input.is_action_pressed("up") and debug:
 					mult = 2
 
 				var jump_peak_y = position.y - JUMP_HEIGHT * mult
