@@ -106,7 +106,7 @@ func handle_jump_state(delta):
 
 				# Handy debug way to get extra-height
 				var mult = 1
-				if Input.is_action_pressed("ui_up"):
+				if Input.is_action_pressed("up"):
 					mult = 2
 
 				var jump_peak_y = position.y - JUMP_HEIGHT * mult

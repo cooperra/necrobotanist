@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/plant_grow_reversed.ogg-e3072053421959b2f374b33068935e5f.oggstr"
+
+[deps]
+
+source_file="res://Sounds/plant_grow_reversed.ogg"
+dest_files=[ "res://.import/plant_grow_reversed.ogg-e3072053421959b2f374b33068935e5f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

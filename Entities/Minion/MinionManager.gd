@@ -3,6 +3,7 @@ extends Node
 
 var minion_list := []
 var necrobotanist := PhysicsBody2D
+var Minion = preload("res://Entities/Minion/Minion.gd")
 
 
 func _ready() -> void:
@@ -32,8 +33,21 @@ func update_minion_targets():
 #		print(m.name)
 	var previous = necrobotanist
 	for m in minion_list:
-		m.target_to_follow = previous
-		previous = m
+		match m.ai_state:
+			Minion.AIState.FOLLOW:
+				m.target_to_follow = previous
+				previous = m
+			Minion.AIState.CHARGE:
+				pass
+			Minion.AIState.FERTILIZE:
+				pass
+			Minion.AIState.BURIED:
+				pass
+			Minion.AIState.RETURN:
+				m.target_to_follow = get_closest(m, [necrobotanist] + minion_list)
+				if m.position.distance_to(m.target_to_follow.position):
+					m.ai_state = Minion.AIState.FOLLOW
+
 
 
 func distance_to_player_sort(a: Node2D, b: Node2D):
@@ -42,5 +56,31 @@ func distance_to_player_sort(a: Node2D, b: Node2D):
 	return a.position.distance_squared_to(necrobotanist.position) < b.position.distance_squared_to(necrobotanist.position)
 
 
+func get_closest(node: Node2D, node_list: Array):
+	var closest = null
+	for other in node_list:
+		if other == node:
+			# Skip self
+			continue
+		if closest == null:
+			closest = other
+		if other.position.distance_squared_to(node.position) < closest.position.distance_squared_to(node.position):
+			closest = other
+	return closest
+
+
 func _on_Timer_timeout() -> void:
 	do_full_check()
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("interact"):
+		# Start charge
+		# Choose closest following minion
+		minion_list.sort_custom(self, "distance_to_player_sort")
+		for minion in minion_list:
+			if minion.ai_state == Minion.AIState.FOLLOW:
+				var charge_direction = -((necrobotanist.facing * 2) - 1)
+				minion.start_charge(charge_direction)
+				break
+		get_tree().set_input_as_handled()

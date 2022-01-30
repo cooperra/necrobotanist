@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/necrobotanist_with_trombone.mp3-121c4bda5ddf61a19d9835a9f772b444.mp3str"
+
+[deps]
+
+source_file="res://Music/necrobotanist_with_trombone.mp3"
+dest_files=[ "res://.import/necrobotanist_with_trombone.mp3-121c4bda5ddf61a19d9835a9f772b444.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

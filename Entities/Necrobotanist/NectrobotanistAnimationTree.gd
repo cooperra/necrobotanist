@@ -8,7 +8,8 @@ extends AnimationTree
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	set("parameters/conditions/buried", false)
+	set("parameters/conditions/not_buried", true)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

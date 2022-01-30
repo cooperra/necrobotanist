@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/necrobonatist_fanfare.ogg-dd3bc22016dfe0a2ad239d5170336dcb.oggstr"
+
+[deps]
+
+source_file="res://Music/necrobonatist_fanfare.ogg"
+dest_files=[ "res://.import/necrobonatist_fanfare.ogg-dd3bc22016dfe0a2ad239d5170336dcb.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

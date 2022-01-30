@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/revive.mp3-04674084bd840ef6d4bde6648ffdd384.mp3str"
+
+[deps]
+
+source_file="res://Sounds/revive.mp3"
+dest_files=[ "res://.import/revive.mp3-04674084bd840ef6d4bde6648ffdd384.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

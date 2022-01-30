@@ -40,13 +40,10 @@ func try_to_plant(state: Physics2DDirectBodyState):
 			# Now check the normal. We don't support planting into sides of tiles
 			var normal: Vector2 = state.get_contact_local_normal(i)
 			if abs(normal.angle_to(Vector2(0, -1))) < deg2rad(45):
-				#print("Current Seed Pos: " + str(position))
-				#print("Contact Local Pos: " + str(state.get_contact_local_position(i)))
 				# Seems like it's actually a global position already. How weird
 				var sprout_pos = state.get_contact_local_position(i)
 				#print("Contact Global pos: " + str(sprout_pos))
 				plant(sprout_pos)
-				queue_free()
 				# If parallel edges collide, it generates two collisions, so return early if we plant
 				return true
 	return false
@@ -56,5 +53,11 @@ func plant(sprout_pos):
 	var new_sprout = sprout_scene.instance()
 	get_tree().current_scene.add_child(new_sprout)
 	new_sprout.global_position = sprout_pos
-	#print("New Spout Pos: " + str(new_sprout.position))
-	#print("New Spout Global Pos: " + str(new_sprout.global_position))
+	# Play sound at current location and self-destruct
+	# Sound will continue playing after self is destroyed
+	var impact_sound = $AudioStreamPlayer2DImpact
+	remove_child(impact_sound)
+	get_parent().add_child(impact_sound)
+	impact_sound.position = position
+	impact_sound.play()
+	queue_free()
