@@ -70,8 +70,8 @@ func shrink():
 		$AnimationPlayer.play_backwards("sprout")
 	else:
 		_remove_stem_segment()
-		if not $AudioStreamPlayer2D.playing:
-			$AudioStreamPlayer2D.play()  # There's no play_backwards for this
+		#if not $AudioStreamPlayer2D.playing:
+		#	$AudioStreamPlayer2D.play()  # There's no play_backwards for this
 		call_deferred("check_growth")
 	growth_level -= 1
 
