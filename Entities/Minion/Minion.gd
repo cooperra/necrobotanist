@@ -48,6 +48,14 @@ var debug_status_text := "Chase"
 var stuck := false
 var STUCK_DISTANCE := 10
 var stuck_location := Vector2.ZERO
+enum AIState {
+	FOLLOW, # Make a conga line behind the Necrobotanist
+	CHARGE, # Run forward for a while. FERTILIZE any nearby seed or RETURN after a time.
+	FERTILIZE, # Decay and become dormant, increasing the plant's growth level.
+	RETURN # Go to the nearest minion or necrobotonist, then return to FOLLOW once nearby.
+}
+var ai_state = AIState.FOLLOW
+var charge_direction_x = 0
 
 
 func _ready() -> void:
@@ -56,7 +64,7 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	update_debug_labels()
-	follow_target()
+	process_ai(delta)
 	handle_horiz_input(delta)
 	handle_jump_state(delta)
 	velocity = move_and_slide_with_snap(velocity, up_direction.rotated(PI), up_direction)
@@ -65,11 +73,33 @@ func _physics_process(delta):
 
 func update_debug_labels():
 	get_node("Debug/Name").text = "Name: " + str(name)
-	get_node("Debug/Target").text = debug_status_text + str(target_to_follow.name)
+	if is_instance_valid(target_to_follow):
+		get_node("Debug/Target").text = debug_status_text + str(target_to_follow.name)
+	else:
+		get_node("Debug/Target").text = debug_status_text + "<invalid>"
+	$Debug/AIState.text = str(ai_state)
+
+
+func process_ai(delta):
+	match ai_state:
+		AIState.FOLLOW:
+			follow_target()
+		AIState.CHARGE:
+			input = Vector2.ZERO
+			input.x = charge_direction_x
+			if is_on_wall():
+				# Jump
+				input.y = 1
+		AIState.FERTILIZE:
+			follow_target()
+		AIState.RETURN:
+			follow_target()
 
 
 func follow_target():
 	input = Vector2.ZERO
+	if not is_instance_valid(target_to_follow):
+		return
 	# Jump if stuck
 	if stuck and not jitter_stop:
 		input.y = 1
@@ -197,13 +227,25 @@ func handle_collisions():
 
 
 func _on_JitterCheck_timeout() -> void:
-
-	if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
-		jitter_stop = true
-	else:
-		jitter_stop_target_pos = target_to_follow.position
-		jitter_stop = false
+	if is_instance_valid(target_to_follow):
+		if target_to_follow.position.is_equal_approx(jitter_stop_target_pos):
+			pass #jitter_stop = true
+		else:
+			jitter_stop_target_pos = target_to_follow.position
+			#jitter_stop = false
 	if is_on_wall():
 		stuck = true
 	else:
 		stuck = false
+
+
+func start_charge(direction_x):
+	charge_direction_x = direction_x
+	ai_state = AIState.CHARGE
+	target_to_follow = null
+	$ReturnTimer.start()
+
+
+func _on_ReturnTimer_timeout():
+	ai_state = AIState.RETURN
+	target_to_follow = null

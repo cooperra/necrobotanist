@@ -401,6 +401,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="AIState" type="RichTextLabel" parent="Debug"]
+margin_left = -72.0
+margin_top = -36.0
+margin_right = 75.0
+margin_bottom = -21.0
+text = "AI State: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="JitterCheck" type="Timer" parent="."]
 autostart = true
 
@@ -432,6 +442,10 @@ anims/unbury = SubResource( 121 )
 anims/walk = SubResource( 109 )
 anims/walk_to_idle = SubResource( 110 )
 
+[node name="ReturnTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="ceiling_bonked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
 [connection signal="felloff" from="." to="AnimationTree" method="_on_Necrobotanist_felloff"]
@@ -441,3 +455,4 @@ anims/walk_to_idle = SubResource( 110 )
 [connection signal="walking_started" from="." to="AnimationTree" method="_on_Necrobotanist_walking_started"]
 [connection signal="walking_stopped" from="." to="AnimationTree" method="_on_Necrobotanist_walking_stopped"]
 [connection signal="timeout" from="JitterCheck" to="." method="_on_JitterCheck_timeout"]
+[connection signal="timeout" from="ReturnTimer" to="." method="_on_ReturnTimer_timeout"]
