@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Entities/Minion/Minion.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Zombie/bornwalkjumpdie03.png" type="Texture" id=2]
@@ -143,9 +143,31 @@ transitions = [ "idle", "jump", SubResource( 16 ), "jump", "rise", SubResource( 
 start_node = "idle"
 graph_offset = Vector2( -203, -65 )
 
+[sub_resource type="AnimationNodeAnimation" id=122]
+animation = "decompose"
+
+[sub_resource type="AnimationNodeAnimation" id=123]
+animation = "unbury"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=124]
+advance_condition = "buried"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=125]
+switch_mode = 2
+advance_condition = "not_buried"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=126]
+switch_mode = 2
+auto_advance = true
+
 [sub_resource type="AnimationNodeStateMachine" id=119]
 states/Locomotion/node = SubResource( 28 )
 states/Locomotion/position = Vector2( 366, 126 )
+states/decompose/node = SubResource( 122 )
+states/decompose/position = Vector2( 632, 126 )
+states/unbury/node = SubResource( 123 )
+states/unbury/position = Vector2( 498, 212 )
+transitions = [ "Locomotion", "decompose", SubResource( 124 ), "decompose", "unbury", SubResource( 125 ), "unbury", "Locomotion", SubResource( 126 ) ]
 start_node = "Locomotion"
 graph_offset = Vector2( -52, -2 )
 
@@ -419,6 +441,8 @@ tree_root = SubResource( 119 )
 anim_player = NodePath("AnimationPlayer")
 active = true
 parameters/playback = SubResource( 99 )
+parameters/conditions/buried = false
+parameters/conditions/not_buried = false
 parameters/Locomotion/playback = SubResource( 100 )
 parameters/Locomotion/conditions/falling = false
 parameters/Locomotion/conditions/grounded = false

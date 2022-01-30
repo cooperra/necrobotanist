@@ -52,6 +52,7 @@ enum AIState {
 	FOLLOW, # Make a conga line behind the Necrobotanist
 	CHARGE, # Run forward for a while. FERTILIZE any nearby seed or RETURN after a time.
 	FERTILIZE, # Decay and become dormant, increasing the plant's growth level.
+	BURIED, # Do nothing
 	RETURN # Go to the nearest minion or necrobotonist, then return to FOLLOW once nearby.
 }
 var ai_state = AIState.FOLLOW
@@ -92,6 +93,8 @@ func process_ai(delta):
 				input.y = 1
 		AIState.FERTILIZE:
 			follow_target()
+		AIState.BURIED:
+			input = Vector2.ZERO
 		AIState.RETURN:
 			follow_target()
 
@@ -247,5 +250,18 @@ func start_charge(direction_x):
 
 
 func _on_ReturnTimer_timeout():
-	ai_state = AIState.RETURN
-	target_to_follow = null
+	if ai_state == AIState.CHARGE:
+		ai_state = AIState.RETURN
+		target_to_follow = null
+
+
+func bury():
+	ai_state = AIState.BURIED
+	$AnimationTree.set("parameters/conditions/buried", true)
+	$AnimationTree.set("parameters/conditions/not_buried", false)
+
+
+func unbury():
+	ai_state = AIState.FOLLOW
+	$AnimationTree.set("parameters/conditions/buried", false)
+	$AnimationTree.set("parameters/conditions/not_buried", true)

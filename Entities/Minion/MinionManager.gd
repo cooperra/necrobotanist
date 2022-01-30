@@ -41,6 +41,8 @@ func update_minion_targets():
 				pass
 			Minion.AIState.FERTILIZE:
 				pass
+			Minion.AIState.BURIED:
+				pass
 			Minion.AIState.RETURN:
 				m.target_to_follow = get_closest(m, [necrobotanist] + minion_list)
 				if m.position.distance_to(m.target_to_follow.position):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Entities/Necrobotanist/Necrobotanist.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Necrobotanist/necro_jump_frames04.png" type="Texture" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://Sprites/Necrobotanist/necro_walk08.png" type="Texture" id=26]
 [ext_resource path="res://Sounds/jump.mp3" type="AudioStream" id=27]
 [ext_resource path="res://Sounds/throw.wav" type="AudioStream" id=28]
+[ext_resource path="res://Entities/Necrobotanist/InteractionController.gd" type="Script" id=29]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -473,6 +474,9 @@ tracks/1/keys = {
 "values": [ "walk" ]
 }
 
+[sub_resource type="CircleShape2D" id=44]
+radius = 92.0217
+
 [node name="Necrobotanist" type="KinematicBody2D" groups=["necrobotanist"]]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -525,6 +529,14 @@ volume_db = -10.0
 [node name="AudioStreamPlayer2DThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 28 )
 volume_db = 10.0
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 16
+script = ExtResource( 29 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource( 44 )
 
 [connection signal="ceiling_bonked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
