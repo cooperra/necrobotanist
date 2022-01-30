@@ -36,8 +36,6 @@ func spawn_minion():
 	minion.position = position + spawn_offset
 	minion.ai_state = Minion.AIState.FOLLOW
 	get_tree().current_scene.add_child(minion)
-	var playback : AnimationNodeStateMachinePlayback = minion.get_node("AnimationTree").get("parameters/playback")
-	playback.start("unbury")
 
 
 func _on_Grave_area_entered(area : Area2D):
