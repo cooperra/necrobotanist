@@ -24,3 +24,7 @@ func _unhandled_input(event):
 				# It's important that this gets dibs over the charge function on the same key binding
 				get_tree().set_input_as_handled()
 				break
+			if area.is_in_group("grave"):
+				if area.on_interact():
+					get_tree().set_input_as_handled()
+					break

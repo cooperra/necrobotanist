@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Levels/General/Main Tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Sprites/Background/white_static2.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://UI/PauseOverlay.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Entities/Minion/Minion.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Entities/Minion/MinionManager.gd" type="Script" id=14]
+[ext_resource path="res://Entities/Grave/Grave.tscn" type="PackedScene" id=15]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
@@ -114,6 +115,9 @@ current = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 drag_margin_left = 0.5
+
+[node name="Grave" parent="." instance=ExtResource( 15 )]
+position = Vector2( -416, -50 )
 
 [connection signal="level_completed" from="Goal" to="AudioStreamPlayer" method="stop"]
 [connection signal="timeout" from="MinionManager/CheckFrequency" to="MinionManager" method="_on_Timer_timeout"]
