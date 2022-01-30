@@ -404,6 +404,7 @@ shape = SubResource( 96 )
 [node name="JumpTween" type="Tween" parent="."]
 
 [node name="Debug" type="Node2D" parent="."]
+visible = false
 
 [node name="Name" type="RichTextLabel" parent="Debug"]
 margin_left = -71.0
