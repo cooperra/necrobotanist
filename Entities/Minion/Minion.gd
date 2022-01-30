@@ -247,6 +247,7 @@ func start_charge(direction_x):
 	ai_state = AIState.CHARGE
 	target_to_follow = null
 	$ReturnTimer.start()
+	$ChargeSound.play()
 
 
 func _on_ReturnTimer_timeout():
@@ -265,3 +266,4 @@ func unbury():
 	ai_state = AIState.FOLLOW
 	$AnimationTree.set("parameters/conditions/buried", false)
 	$AnimationTree.set("parameters/conditions/not_buried", true)
+	$ReviveSound.play()

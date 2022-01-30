@@ -36,6 +36,7 @@ func spawn_minion():
 	minion.position = position + spawn_offset
 	minion.ai_state = Minion.AIState.FOLLOW
 	get_tree().current_scene.add_child(minion)
+	minion.get_node("ReviveSound").play()
 
 
 func _on_Grave_area_entered(area : Area2D):

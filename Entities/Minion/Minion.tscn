@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://Entities/Minion/Minion.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Zombie/bornwalkjumpdie03.png" type="Texture" id=2]
@@ -30,6 +30,8 @@
 [ext_resource path="res://Sprites/Zombie/bornwalkjumpdie00.png" type="Texture" id=28]
 [ext_resource path="res://Sprites/Zombie/bornwalkjumpdie20.png" type="Texture" id=29]
 [ext_resource path="res://Entities/Necrobotanist/NectrobotanistAnimationTree.gd" type="Script" id=30]
+[ext_resource path="res://Sounds/zombie_attack.wav" type="AudioStream" id=31]
+[ext_resource path="res://Sounds/revive.mp3" type="AudioStream" id=32]
 
 [sub_resource type="SpriteFrames" id=97]
 animations = [ {
@@ -469,6 +471,13 @@ anims/walk_to_idle = SubResource( 110 )
 [node name="ReturnTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="ChargeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 31 )
+volume_db = 3.0
+
+[node name="ReviveSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 32 )
 
 [connection signal="ceiling_bonked" from="." to="AnimationTree" method="_on_Necrobotanist_jump_peaked"]
 [connection signal="facing_changed" from="." to="Sprite" method="set_flip_h"]
